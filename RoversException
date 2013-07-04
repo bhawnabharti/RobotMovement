@@ -1,0 +1,22 @@
+package mine;
+
+/**
+ * RoversException
+ * @author bhawna bharti
+ *
+ */
+public class RoversException extends Exception {
+  /**
+	 * default constructor
+	 */
+	public RoversException(){
+		super();
+	}
+	
+	/**
+	 * constructor with message
+	 * @param message
+	 */
+	public RoversException(String message) { super(message); }
+
+}
