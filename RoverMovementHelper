@@ -1,0 +1,133 @@
+package mine;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * RoverMovementHelper singleton class
+ * @author bhawna bharti
+ *
+ */
+public class RoverMovementHelper {
+  /**
+	 * singleton instance of RoverMovementHelper
+	 */
+	private final static RoverMovementHelper instance = new RoverMovementHelper();
+	/**
+	 * directionFinder is list of direction in clockwise in case of right turn
+	 */
+	private List<Direction> directionFinder = new ArrayList<Direction>();
+	
+	private RoverMovementHelper(){
+		/**
+		 * Here I have created dataStructure of circular Array List with Direction in clockwise
+		 */
+		directionFinder.add(Direction.E);
+		directionFinder.add(Direction.S);
+		directionFinder.add(Direction.W);
+		directionFinder.add(Direction.N);
+	}
+	
+	public static RoverMovementHelper getInstance(){
+		return instance;
+	}
+
+
+	/**
+	 * check move for validity, like, rover should always be within boundary of Plataeu
+	 * First check valid position and then only move otherwise throw exception
+	 * @param plateau
+	 * @param roboPosition
+	 * @param moves
+	 * @param robot
+	 * @throws RoversException
+	 */
+	public void applyMoves(Plateau plateau, char[] moves, Rover robot) throws RoversException {
+		if(moves.length==0){
+			return;
+		}
+		for(char move:moves){
+			if(move == 'M'){//need to validate only in case of move
+				Point nextPosition = findNextPoint(robot.getCurrentPosition().getDirection(), 
+						robot.getCurrentPosition().getPoint());
+				if(!PositionValidator.isRoverWithinPlateauSurface(nextPosition, plateau))
+				{
+					throw new RoversException(
+					"oops.. Rover will be outside land surface after this move");
+				}
+			}
+			robot.makeMove(move); //if validation is done then move robot
+			
+		}
+	}
+
+	
+/**
+ *  Gets RoverPosition
+ * @param roboPosition
+ * @return RoverPosition
+ */
+		
+	public RoverPosition getRoverPosition(String roboPosition) {
+		String[] tokens = roboPosition.split(" ");
+		Point point = new Point(stringToInteger(tokens[0]), stringToInteger(tokens[1]));
+		RoverPosition roboPos = new RoverPosition(Direction.valueOf(tokens[2]), point);
+		return roboPos;
+	}
+	
+	/**
+	 * Conversion of String
+	 * @param input
+	 * @return
+	 */
+	public int stringToInteger(String input) {
+		return Integer.parseInt(input);
+	}
+	
+	/**
+	 * This method gives next co-ordinate of point in case of Movement(M)
+	 * @param direction
+	 * @param point
+	 * @return
+	 */
+	public Point findNextPoint(Direction direction, Point point)
+	{
+		int x = point.getX();
+		int y = point.getY();
+		switch(direction)
+		{
+		case E: x += 1; break;
+		case W: x -= 1; break;
+		case N: y += 1; break;
+		case S: y -= 1; break;
+		}
+		return new Point(x, y);
+	}
+	
+/**
+ * Here I have created dataStructure of circular Array List with Direction in clockwise
+ * MoveLeft will behave like moving in anti-clockWise 
+ * @param currentDirection
+ * @return
+ */
+	public Direction moveLeft(Direction currentDirection) {
+		int index = currentDirection.getIndex();
+		if (index == 0) {
+			index = directionFinder.size();
+		}
+		return directionFinder.get(index - 1);
+	}
+	/**
+	 * Here I have created dataStructure of circular Array List with Direction in clockwise
+	 * MoveRight will behave like moving in clockWise 
+	 * @param currentDirection
+	 * @return
+	 */
+	public Direction moveRight(Direction currentDirection) {
+		int index = currentDirection.getIndex();
+		if (index == directionFinder.size() - 1) {
+			index = -1;
+		}
+		return directionFinder.get(index + 1);
+	}
+}
