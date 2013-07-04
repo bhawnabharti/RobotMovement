@@ -1,0 +1,67 @@
+package mine;
+
+/**
+ * Rover move
+ * @author bhawna bharti
+ *
+ */
+public class Rover {
+  
+/** rover knows its current Position */
+	private RoverPosition currentPosition;
+	
+	/**
+	 * construction of rover
+	 * @param roverPosition
+	 */
+	public Rover(RoverPosition roverPosition){
+		this.currentPosition = roverPosition;
+	}
+	
+/**
+ *  Main logic for Rover Movement
+ *  
+ * @param currentPosition
+ * @param robotMoves
+ * @param plateau
+ * @return
+ * @throws RoversException
+ * @throws CloneNotSupportedException 
+ */
+	public void makeMove(char move) throws RoversException{
+
+		RoverMovementHelper instance = RoverMovementHelper.getInstance();
+		switch (move) {
+		case 'L': // Move Left
+			currentPosition.setDirection(instance.moveLeft(currentPosition.getDirection()));
+			break;
+		case 'R': // Move Right
+			currentPosition.setDirection(instance.moveRight(currentPosition.getDirection()));
+			break;
+
+		case 'M': // Move Forward
+			currentPosition.setPoint(instance.findNextPoint(currentPosition.getDirection(),
+							currentPosition.getPoint()));
+			break;
+		default:
+			throw new RoversException("This is not valid move");
+		}
+	}
+/**
+ * RoverPosition
+ * @return
+ */
+public RoverPosition getCurrentPosition() {
+	return currentPosition;
+}
+
+/**
+ * RoverPosition
+ * @param currentPosition
+ */
+public void setCurrentPosition(RoverPosition currentPosition) {
+	this.currentPosition = currentPosition;
+}
+
+
+}
