@@ -1,0 +1,58 @@
+package mine;
+
+/**
+ * Rover Position which has currentPosition and point
+ * @author bhawna bharti
+ *
+ */
+public class RoverPosition{
+
+  /**
+	 * Direction of currentPosition
+	 */
+	private Direction direction;
+	
+	/**
+	 * Point x and y co-ordinate
+	 */
+	private Point point;
+
+	/**
+	 * @param direction
+	 * @param point
+	 */
+	public RoverPosition(Direction direction, Point point) {
+		super();
+		this.direction = direction;
+		this.point = point;
+	}
+
+	/**
+	 * @return the direction
+	 */
+	public Direction getDirection() {
+		return direction;
+	}
+
+	/**
+	 * @param direction the direction to set
+	 */
+	public void setDirection(Direction direction) {
+		this.direction = direction;
+	}
+
+	/**
+	 * @return the point
+	 */
+	public Point getPoint() {
+		return point;
+	}
+
+	/**
+	 * @param point the point to set
+	 */
+	public void setPoint(Point point) {
+		this.point = point;
+	}
+
+}
