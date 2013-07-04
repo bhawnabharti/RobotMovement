@@ -1,0 +1,22 @@
+package mine;
+
+/**
+ * Keeps Direction 
+ * @author bhawna bharti
+ *
+ */
+public enum Direction {
+  
+	//index is associated with Direction 
+	N(3), S(1), E(0), W(2);
+	
+	private int index;
+
+	Direction(int index) {
+		this.index = index;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+}
