@@ -1,0 +1,36 @@
+package mine;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+/**
+ * Test class for testing Rover
+ * @author bhawna bharti
+ *
+ */
+public class TestMarsRovers {
+
+  public static void main(String[] args) throws IOException {
+		//test through input Stream file
+		BufferedReader input = new BufferedReader(new InputStreamReader(
+				(new FileInputStream("C://Users//bharti//file.txt")),"Unicode"));
+		BufferedWriter output = new BufferedWriter(new OutputStreamWriter(
+				new FileOutputStream("C://Users//bharti//output1.txt"),
+				"UTF-8"));
+		try {
+			
+			//take file input and flush output in file
+			FileProcessor.inputFileProcessing(input, output);
+		} catch (Exception e) {
+			output.write(e.getMessage());
+		} finally {
+			input.close();
+			output.close();
+		}
+	}
+
+}
