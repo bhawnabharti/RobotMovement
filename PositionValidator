@@ -1,0 +1,28 @@
+package mine;
+
+/**
+ * Util class to validate position
+ * @author bhawna bharti
+ *
+ */
+public class PositionValidator {
+
+   /**
+	 * validate whether Rover is within Surface of Plateau
+	 * @param point
+	 * @param plateau
+	 * @return
+	 */
+	public static boolean isRoverWithinPlateauSurface(Point point, Plateau plateau) {		
+		Point bottomLeftPoint = plateau.getBottomLeftPoint();
+		Point topRightPoint = plateau.getTopRightPoint();
+		if ((bottomLeftPoint.getX() <= point.getX() && topRightPoint.getX() >= point.getX())
+				&& (bottomLeftPoint.getY() <= point.getY() && topRightPoint.getY() >= point.getY())) {
+			return true;
+		}
+		return false;
+	}
+
+
+
+}
