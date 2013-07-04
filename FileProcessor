@@ -1,0 +1,72 @@
+package mine;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * File processing done here 
+ * @author bhawna bharti
+ *
+ */
+public class FileProcessor {
+  /**
+	 * File Processing and rover movement 
+	 * @param inputTextFile
+	 * @param outputTextFile
+	 * @throws NumberFormatException
+	 * @throws IOException
+	 * @throws CloneNotSupportedException 
+	 */
+	public static void inputFileProcessing(BufferedReader inputTextFile,
+			BufferedWriter outputTextFile) throws NumberFormatException,
+			IOException {
+		String line;
+		String firstLine;
+		List<RoverPosition> processedRoverTillNow = new ArrayList<RoverPosition>();
+		String[] firstLineInput = null;;
+		if ((firstLine = line = inputTextFile.readLine()) != null)
+			 firstLineInput = firstLine.split(" ");
+		int	boundary_x = RoverMovementHelper.getInstance().stringToInteger(firstLineInput[0]);
+		int boundary_y = RoverMovementHelper.getInstance().stringToInteger(firstLineInput[1]);
+       
+		// create Plateau surface
+		Plateau plateau = new Plateau(new Point(boundary_x, boundary_y), new Point(0,0));
+		while (line != null) { //read till end of file
+			// Next Line read for Position
+			if ((line = inputTextFile.readLine()) != null) {
+				RoverPosition roboPosition = RoverMovementHelper.getInstance().getRoverPosition(line);
+				try {
+				
+
+				// Next Line read for Moves
+				if ((line = inputTextFile.readLine()) != null) {
+					char[] moves = line.toCharArray();
+					Rover robot = new Rover(roboPosition);
+
+					if(!PositionValidator.isRoverWithinPlateauSurface(roboPosition.getPoint(), plateau))
+					{
+						throw new RoversException(
+						"oops.. Rover is outside land surface");
+					}
+					RoverMovementHelper.getInstance().applyMoves(plateau, moves, robot);
+						
+					
+				}
+				} catch (RoversException e) {
+					outputTextFile.write(e.getMessage()
+							+ " for RoverPosition ");
+				}
+				processedRoverTillNow.add(roboPosition);
+				String output = roboPosition.getPoint().getX() + " "
+				+ roboPosition.getPoint().getY() + " "
+				+ roboPosition.getDirection() + "\n";
+				output = output.replaceAll("(?!\\r)\\n", "\r\n");
+				outputTextFile.write(output);
+				outputTextFile.flush();
+			}
+		}
+	}
+}
