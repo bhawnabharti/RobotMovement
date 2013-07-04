@@ -1,0 +1,50 @@
+package mine;
+
+/**
+ * Plateau Position
+ * @author bhawna bharti
+ *
+ */
+public class Plateau {
+
+    /** Plateau top Right corner */
+  private Point topRightPoint;
+	/** Plateau top Right corner */
+	private Point bottomLeftPoint;
+	
+	/**
+	 * @return the topRightPoint
+	 */
+	public Point getTopRightPoint() {
+		return topRightPoint;
+	}
+	/**
+	 * @param topRightPoint the topRightPoint to set
+	 */
+	public void setTopRightPoint(Point topRightPoint) {
+		this.topRightPoint = topRightPoint;
+	}
+	/**
+	 * @return the bottomLeftPoint
+	 */
+	public Point getBottomLeftPoint() {
+		return bottomLeftPoint;
+	}
+	/**
+	 * @param bottomLeftPoint the bottomLeftPoint to set
+	 */
+	public void setBottomLeftPoint(Point bottomLeftPoint) {
+		this.bottomLeftPoint = bottomLeftPoint;
+	}
+	/**
+	 * @param topRightPoint
+	 * @param bottomLeftPoint
+	 */
+	public Plateau(Point topRightPoint, Point bottomLeftPoint) {
+		super();
+		this.topRightPoint = topRightPoint;
+		this.bottomLeftPoint = bottomLeftPoint;
+	}
+
+	
+}
