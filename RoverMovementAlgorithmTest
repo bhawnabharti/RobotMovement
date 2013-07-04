@@ -1,0 +1,63 @@
+package mine;
+
+import junit.framework.*;
+
+/**
+ * junit test for robot move functionality
+ * @author bhawna bharti
+ *
+ */
+public class RoverMovementAlgorithmTest extends TestCase {
+
+  Rover robot = null;
+	
+	@Override
+	public void setUp() { 
+		RoverPosition  currentPosition = new  RoverPosition(Direction.E, new Point(0, 0));
+		robot = new Rover(currentPosition); // create an order
+	}
+	
+	public void testFinalRobotPosition(){
+        setUp();
+        char[] robotMoves ={'L','M','R'};
+        Plateau plateau = new Plateau(new Point(6, 4), new Point(0, 0));
+		try {
+			RoverMovementHelper.getInstance().applyMoves(plateau, robotMoves, robot);
+		} catch (RoversException e) {
+			e.printStackTrace();
+		}
+		assertTrue(robot.getCurrentPosition().getDirection() == Direction.E);
+		assertTrue(robot.getCurrentPosition().getPoint().getY() == 1);
+		
+	}
+	
+	
+	public void testRobotInvalidMove(){
+        setUp();
+        char[] robotMoves ={'L','M','L','M'};
+        Plateau plateau = new Plateau(new Point(1, 1), new Point(0, 0));
+        robot = new Rover(new  RoverPosition(Direction.E, new Point(0, 0)));
+		try {
+			RoverMovementHelper.getInstance().applyMoves(plateau, robotMoves, robot);
+		} catch (RoversException e) {
+			assertTrue(e.getMessage().equals("oops.. Rover will be outside land surface after this move"));
+			
+		}
+		
+	}
+
+	public void testRobotInvalidStartPosition(){
+        setUp();
+        char[] robotMoves ={'L','M','L','M'};
+        Plateau plateau = new Plateau(new Point(1, 1), new Point(0, 0));
+        robot = new Rover(new  RoverPosition(Direction.E, new Point(6, 0)));
+		try {
+			RoverMovementHelper.getInstance().applyMoves(plateau, robotMoves, robot);
+		} catch (RoversException e) {
+			assertTrue(e.getMessage().equals("oops.. Rover will be outside land surface after this move"));
+			
+		}
+		
+	}
+
+}
